@@ -1,13 +1,10 @@
 /*
-    NeaPolis Innovation Summer Campus 2021 Examples 
-    Copyright (C) 2020-2021 Salvatore Dello Iacono [delloiaconos@gmail.com]
-
+    NeaPolis Innovation Summer Campus 2023 Examples
+    Copyright (C) 2020-2023 Salvatore Dello Iacono [delloiaconos@gmail.com]
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
-
         http://www.apache.org/licenses/LICENSE-2.0
-
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -31,8 +28,8 @@ BaseSequentialStream *chp = (BaseSequentialStream*) &SD2;
  * Encoder direction reading.
  * WARNING! You need to enable PAL_USE_WAIT into halconf.h
  */
-#define ENCODER_CLK_LINE LINE_ARD_D8
-#define ENCODER_DT_LINE  LINE_ARD_D9
+#define ENCODER_CLK_LINE PAL_LINE( GPIOA, 9U ) //old LINE_ARD_D8
+#define ENCODER_DT_LINE  PAL_LINE( GPIOC, 7U )// old LINE_ARD_D9
 
 static THD_WORKING_AREA(waEncoder, 128);
 static THD_FUNCTION(thdEncoder, arg) {
@@ -70,10 +67,11 @@ int main(void) {
   chSysInit();
 
   /*
-   * Activates the serial driver 2 using the driver default configuration.
+   * Activates the serial driver 2 using the A2 and A3 pins.
    */
+  palSetPadMode( GPIOA, 2, PAL_MODE_ALTERNATE(7) );
+  palSetPadMode( GPIOA, 3, PAL_MODE_ALTERNATE(7) );
   sdStart(&SD2, NULL);
-
   /*
    * Creates the encoder thread.
    */
