@@ -1,6 +1,5 @@
 /*
-    NeaPolis Innovation Summer Campus 2021 Examples 
-    Copyright (C) 2020-2021 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    ChibiOS - Copyright (C) 2006..2018 Giovanni Di Sirio
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -15,15 +14,26 @@
     limitations under the License.
 */
 
-
-/*
- * Basic project with ChibiOS/RT + HAL on 
- * STMicroelectronics NUCLEO64F401RE development board
- */
-
 #include "ch.h"
 #include "hal.h"
+#include "rt_test_root.h"
+#include "oslib_test_root.h"
 
+/*
+ * Green LED blinker thread, times are in milliseconds.
+ */
+static THD_WORKING_AREA(waThread1, 128);
+static THD_FUNCTION(Thread1, arg) {
+
+  (void)arg;
+  chRegSetThreadName("blinker");
+  while (true) {
+    palClearLine(LINE_LED_GREEN);
+    chThdSleepMilliseconds(500);
+    palSetLine(LINE_LED_GREEN);
+    chThdSleepMilliseconds(500);
+  }
+}
 
 /*
  * Application entry point.
@@ -41,11 +51,26 @@ int main(void) {
   chSysInit();
 
   /*
+   * Activates the Serial or SIO driver using the default configuration.
+   */
+  sioStart(&LPSIOD1, NULL);
+  sioStartOperation(&LPSIOD1, NULL);
+
+  /*
+   * Creates the blinker thread.
+   */
+  chThdCreateStatic(waThread1, sizeof(waThread1), NORMALPRIO, Thread1, NULL);
+
+  /*
    * Normal main() thread activity, in this demo it does nothing except
    * sleeping in a loop and check the button state.
    */
   while (true) {
-    palTogglePad(GPIOA, GPIOA_LED_GREEN);
+   if (palReadLine(LINE_BUTTON)) {
+      test_execute((BaseSequentialStream *)&LPSIOD1, &rt_test_suite);
+      test_execute((BaseSequentialStream *)&LPSIOD1, &oslib_test_suite);
+    }
     chThdSleepMilliseconds(500);
   }
 }
+
