@@ -140,8 +140,8 @@ static THD_FUNCTION( thdLed, arg ) {
     /*
      * Print converted values. (Set CHPRINTF_USE_FLOAT to TRUE)
      */
-    chprintf( chp, "X channel = %4.1f \n\r", converted[0] );
-    chprintf( chp, "Y channel = %4.1f \n\r", converted[1] );
+    chprintf( chp, "X channel = %4.1f %%\n\r", converted[0] );
+    chprintf( chp, "Y channel = %4.1f %%\n\r", converted[1] );
   }
 
   adcStop(&ADCD1);
