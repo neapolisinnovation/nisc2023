@@ -15,7 +15,7 @@
 /*
  * [NISC2023-GPIO03] - Reading the on-board user button.
  * DESCRIPTION: Read the LINE_BUTTON that refers to the USER button on the
- * NUCLEO-64 Board and if it has been pressed (condition PAL_LOW) turn-on
+ * NUCLEO-64 Board and if it has been pressed (condition PAL_HIGH) turn-on
  * the on-board LED.
  */
 
