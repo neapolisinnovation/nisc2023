@@ -67,8 +67,6 @@ int main(void) {
 
   sdStart(&SD2, NULL);
 
-
-  chprintf( chp, "AMOGUS = %d\n\r", counter);
   palSetPadMode(GPIOA, 0, PAL_MODE_ALTERNATE(2));
 
   icuStart(&ICUD5, &icucfg);
