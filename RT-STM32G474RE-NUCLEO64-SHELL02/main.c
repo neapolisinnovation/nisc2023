@@ -13,8 +13,8 @@
 */
 
 /*
- * [NISC2023-BASE] - Basic Project Structure.
- * DESCRIPTION: This project has been adapted from the ChibiOS Demos
+ * [NISC2022-SHELL02] - Project-Local custom shell.
+ * DESCRIPTION: The shell has been imported into the project to be modified.
  */
 
 #include "ch.h"

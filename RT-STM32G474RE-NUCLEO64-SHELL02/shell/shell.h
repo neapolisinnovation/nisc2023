@@ -22,6 +22,11 @@
 #ifndef SHELL_H
 #define SHELL_H
 
+#include "ch.h"
+#include "hal.h"
+
+#define SHELL_CONFIG_FILE
+
 #if defined(SHELL_CONFIG_FILE)
 #include "shellconf.h"
 #endif
