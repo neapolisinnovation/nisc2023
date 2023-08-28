@@ -23,6 +23,8 @@
 #include "ch.h"
 #include "hal.h"
 
+#include "shellconf.h"
+
 #include "shell.h"
 #include "chprintf.h"
 
@@ -36,11 +38,19 @@ static void cmd_hello(BaseSequentialStream *chp, int argc, char *argv[]) {
 }
 
 static void cmd_led(BaseSequentialStream *chp, int argc, char *argv[]) {
-  if( argc == 1 && strcmp( argv[0], "ON" ) == 0 ) {
+
+  static uint8_t led_status = 0;
+
+  if( (argc == 1 && strcmp( argv[0], "ON" ) == 0) ||
+      (argc==0 && led_status==0)) {
     palSetLine( LINE_LED_GREEN );
-  } else if( argc == 1 && strcmp( argv[0], "OFF" ) == 0 ) {
+    led_status = 1;
+  } else if( (argc == 1 && strcmp( argv[0], "OFF" ) == 0 )||
+      (argc==0 && led_status==1)) {
     palClearLine( LINE_LED_GREEN );
-  } else {
+    led_status = 0;
+  }
+    else {
     chprintf(chp, "Usage: led [ON|OFF]\r\n");
   }
 }

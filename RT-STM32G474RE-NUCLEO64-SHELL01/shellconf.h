@@ -23,6 +23,7 @@
 
 /* Shell Prompt string */
 #define SHELL_PROMPT_STR            "nisc> "
+#define SHELL_THREAD_NAME           "shell"
 
 
 #define SHELL_CMD_EXIT_ENABLED              FALSE
