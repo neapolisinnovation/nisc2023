@@ -359,7 +359,7 @@ THD_FUNCTION(shellThread, p) {
 #endif
 
   chprintf(chp, SHELL_NEWLINE_STR);
-  chprintf(chp, "ChibiOS/RT Shell" SHELL_NEWLINE_STR);
+  chprintf(chp, "NISC 2023 Shell" SHELL_NEWLINE_STR);
 #if !defined(__CHIBIOS_NIL__)
   while (!chThdShouldTerminateX()) {
 #else
